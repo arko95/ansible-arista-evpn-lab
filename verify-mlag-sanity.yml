@@ -1,0 +1,14 @@
+---
+- hosts: leafs
+  gather_facts: false
+  tasks:
+
+    - name: Get mlag status
+      eos_command:
+        commands:
+          - show mlag | json
+      register: command_output
+
+    - name: Print Mlag ConfigSanity Status
+      debug:
+        var: command_output.stdout[0]["configSanity"]

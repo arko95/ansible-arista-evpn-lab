@@ -1,26 +1,35 @@
 ---
 - hosts: leafs
-  connection: local
+  #connection: local
   gather_facts: no
 
   tasks:
   - name: Gather lldp neighbors
     eos_command: 
-      commands: 'show lldp neighbor | json'
-    register: output
+      commands: 'show lldp neighbors | json'
+    register: result
+    tags:
+      - lldp
+  
+  # - name: Get neighbors list
+  #   set_fact:
+  #     lldp_neighbors: "{{ result.stdout[0].lldpNeighbors[0].neighborDevice }}"
+  #   tags:
+  #     - lldp
+  
+  - name: Print Neighbors list
+    debug:
+      var: result.stdout[0].lldpNeighbors[0].neighborDevice
     tags:
       - lldp
 
-  - set_fact:
-      lldp:
-        "{{output.stdout[0].lldpNeighbors|lldp_list}}"
-
-  - name: Validate LLDP Neighbors
-    assert:
-      that: '"spine1" and "spine2" and in lldp'
-      msg: "Check L1 connectivity to Spines"
-    tags:
-      - lldp
+  # - name: Validate LLDP Neighbors
+  #   assert:
+  #     that: "'Spine1' in lldp_neighbors"
+  #     fail_msg: "One link is faulty"
+  #     success_msg: "Connectivity OK"
+  #   tags:
+  #     - lldp
 
   - name: Gather MLAG State
     eos_command: 
@@ -70,9 +79,9 @@
     tags:
       - bgp
 
-  - name: Validate each spine has 8 peers
+  - name: Validate each spine has 4 peers
     assert:
-      that: '(peer_count|int) == 8'
+      that: '(peer_count|int) == 4'
     when: "'spine' in inventory_hostname"
     tags:
       - bgp
@@ -93,7 +102,7 @@
 
   - name: Get EVPN peer list
     set_fact:
-      bgp_peers: "{{ output.stdout[0].peers }}"
+      bgp_peers: "{{ output.stdout[0].vrfs.default.peers }}"
     tags:
       - evpn
 
@@ -104,9 +113,9 @@
     tags:
       - evpn
 
-  - name: Validate each spine has 6 EVPN peers
+  - name: Validate each spine has 4 EVPN peers
     assert:
-      that: '(bgp_peers|length) == 8'
+      that: '(bgp_peers|length) == 4'
     when: "'spine' in inventory_hostname"
     tags:
       - evpn

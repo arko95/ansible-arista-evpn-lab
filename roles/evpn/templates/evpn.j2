@@ -10,12 +10,18 @@ router bgp {{ asn }}
 {% for item in evpn_neighbors %}
    neighbor {{ item.neighbor }} peer-group evpn
    neighbor {{ item.neighbor }} remote-as {{ item.remote_as }}
+{%   if item.state == 'absent' %}
+   no neighbor {{ item.neighbor }}
+{% endif %}
 {% endfor %}
    !
    address-family evpn
       neighbor evpn activate
 {% if 'leaf' in hostname %}
       network {{ loopback1_ip }}/32
+   !
+   address-family ipv4
+      no neighbor evpn activate
 
 interface Vxlan1
    vxlan source-interface Loopback1

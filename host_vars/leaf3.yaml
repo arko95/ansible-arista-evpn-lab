@@ -20,11 +20,11 @@ hostname: leaf3
 interfaces:
 - address: 10.0.1.5
   description: spine1
-  interface: Ethernet11
+  interface: Ethernet3
   mask: /31
 - address: 10.0.2.5
   description: spine2
-  interface: Ethernet12
+  interface: Ethernet4
   mask: /31
 - address: 10.0.3.2
   interface: Vlan4091

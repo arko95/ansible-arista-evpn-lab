@@ -14,16 +14,16 @@ bgp_neighbors:
   state: present
 - neighbor: 10.0.1.9
   remote_as: 65003
-  state: present
+  state: absent
 - neighbor: 10.0.1.11
   remote_as: 65003
-  state: present
+  state: absent
 - neighbor: 10.0.1.13
   remote_as: 65004
-  state: present
+  state: absent
 - neighbor: 10.0.1.15
   remote_as: 65004
-  state: present
+  state: absent
 evpn_neighbors:
 - neighbor: 10.0.250.11
   remote_as: 65001
@@ -39,16 +39,16 @@ evpn_neighbors:
   state: present
 - neighbor: 10.0.250.15
   remote_as: 65003
-  state: present
+  state: absent
 - neighbor: 10.0.250.16
   remote_as: 65003
-  state: present
+  state: absent
 - neighbor: 10.0.250.17
   remote_as: 65004
-  state: present
+  state: absent
 - neighbor: 10.0.250.18
   remote_as: 65004
-  state: present
+  state: absent
 hostname: spine1
 interfaces:
 - address: 10.0.1.0
@@ -67,20 +67,20 @@ interfaces:
   description: leaf4
   interface: Ethernet4
   mask: /31
-- address: 10.0.1.8
-  description: leaf5
-  interface: Ethernet5
-  mask: /31
-- address: 10.0.1.10
-  description: leaf6
-  interface: Ethernet6
-  mask: /31
-- address: 10.0.1.12
-  description: leaf7
-  interface: Ethernet7
-  mask: /31
-- address: 10.0.1.14
-  description: leaf8
-  interface: Ethernet8
-  mask: /31
+# - address: 10.0.1.8
+#   description: leaf5
+#   interface: Ethernet5
+#   mask: /31
+# - address: 10.0.1.10
+#   description: leaf6
+#   interface: Ethernet6
+#   mask: /31
+# - address: 10.0.1.12
+#   description: leaf7
+#   interface: Ethernet7
+#   mask: /31
+# - address: 10.0.1.14
+#   description: leaf8
+#   interface: Ethernet8
+#   mask: /31
 loopback0_ip: 10.0.250.1

@@ -13,7 +13,11 @@ interface vlan 4090
    no autostate
    no shutdown
 !
-interface Ethernet 10
+interface Ethernet 1
+   description mlag peer link
+   channel-group 999 mode active
+!
+interface Ethernet 2
    description mlag peer link
    channel-group 999 mode active
 !

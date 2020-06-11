@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  gather_facts: false
+  tasks:
+
+  - name: Save config
+    eos_config:
+      save_when: always
+      

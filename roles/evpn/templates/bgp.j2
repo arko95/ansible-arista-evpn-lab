@@ -1,3 +1,5 @@
+ip routing
+!
 router bgp {{ asn }}
    router-id {{ loopback0_ip }}
    no bgp default ipv4-unicast
@@ -9,6 +11,9 @@ router bgp {{ asn }}
 {%   if item.remote_as == asn %}   
    neighbor {{ item.neighbor }} next-hop-self
 {%   endif %}
+{%   if item.state == 'absent' %}
+   no neighbor {{ item.neighbor }}
+{% endif %}
 {% endfor %}
    !
    address-family ipv4
